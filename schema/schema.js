@@ -194,6 +194,30 @@ const mutation = new GraphQLObjectType({
         )
       },
     },
+    // Update a client
+    updateClient: {
+      type: ClientType,
+      args: {
+        id: { type: GraphQLNonNull(GraphQLID) },
+        name: { type: GraphQLNonNull(GraphQLString) },
+        userName: { type: GraphQLNonNull(GraphQLString) },
+        email: { type: GraphQLNonNull(GraphQLString) },
+        address: { type: GraphQLNonNull(GraphQLString) },
+      },
+      resolve (parent, args) {
+        return Client.findByIdAndUpdate(
+          args.id,
+          {
+            $set: {
+              name: args.name,
+              userName: args.userName,
+              email: args.email,
+              address: args.address,
+            },
+          },
+        )
+      },
+    },
   },
 })
 
